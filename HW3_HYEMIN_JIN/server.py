@@ -8,7 +8,7 @@ while True:
     client, addr = s.accept()
     print('Connection from ', addr)
     client.send(b'Hello ' + addr[0].encode())
-
+    
     name = client.recv(1024) # 2 : 이름 수신 후 출력
     print(name.decode())
 
