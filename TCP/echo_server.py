@@ -10,6 +10,7 @@ while True:
     data = conn.recv(BUFSIZE)
     print("Received message: ", data.decode())
     conn.send(data)
-
+    if KeyboardInterrupt():
+        break
 conn.close()
 sock.close()

@@ -11,7 +11,7 @@ while True:
     msg = input('-> ')
     reTx = 0
 
-    while reTx < 5:
+    while reTx <= 5:
         resp = str(reTx) + ' ' + msg
         c_sock.sendto(resp.encode(), ('localhost', port))
         c_sock.settimeout(2)
