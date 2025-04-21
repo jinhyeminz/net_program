@@ -1,4 +1,4 @@
-# 코드 수정 필요
+# 코드 수정 완료
 from socket import *
 import random
 import time
@@ -25,13 +25,14 @@ while True:
 
     while reTx <= 5:
         resp = str(reTx) + ' ' + msg
-        sock.sendto(resp.encode(), ('localhost', port))
+        sock.sendto(resp.encode(), addr)
         sock.settimeout(2)
         try:
             data, addr = sock.recvfrom(BUFF_SIZE)
         except timeout:
             reTx += 1
-            print('재전송 {}회'.format(reTx))
+            print(f'재전송 {reTx}회')
             continue
         else:
+            print(data.decode())
             break

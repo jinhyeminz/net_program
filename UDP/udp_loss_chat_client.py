@@ -1,8 +1,9 @@
-# 코드 수정 필요
+# 코드 수정 완료
 from socket import *
+import random
 
-BUFF_SIZE = 1024
 port = 3333
+BUFF_SIZE = 1024
 
 c_sock = socket(AF_INET, SOCK_DGRAM)
 
@@ -13,18 +14,24 @@ while True:
     while reTx < 5:
         resp = str(reTx) + ' ' + msg
         c_sock.sendto(resp.encode(), ('localhost', port))
-
         c_sock.settimeout(2)
         try:
             data, addr = c_sock.recvfrom(BUFF_SIZE)
         except timeout:
             reTx += 1
-            print('Timeout 발생! 재전송 {}회'.format(reTx))
+            print(f'재전송 {reTx}회')
             continue
         else:
+            print(data.decode())
             break
 
     c_sock.settimeout(None)
-    data, addr = c_sock.recvfrom(BUFF_SIZE)
-    print('<- ',data.decode())
-    c_sock.sendto(b'ack', addr)
+
+    while True:
+        data, addr = c_sock.recvfrom(BUFF_SIZE)
+        if random.random() <= 0.5:
+            continue
+        else:
+            c_sock.sendto(b'ack', addr)
+            print('<- ', data.decode())
+            break
