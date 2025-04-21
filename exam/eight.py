@@ -17,12 +17,14 @@ while True:
     if not data:
         conn.close()
         continue
+    
     msg = data.decode()
-    # req = msg.split('\r\n')[0]
-    req = 'GET / HTTP/1.1\r\n'
-    req += 'Host: www.daum.net\r\n'
+
+    req = msg.split('\r\n')[0]
+    req += '\r\nHost: www.daum.net\r\n'
+    req += '\r\n'
 
     c_sock.connect(('www.daum.net', 80))
     c_sock.send(req.encode('utf-8'))
 
-    s_sock.send(c_sock.recv(BUFF_SIZE))
+    conn.send(c_sock.recv(BUFF_SIZE))
